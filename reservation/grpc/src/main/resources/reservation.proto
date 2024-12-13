@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option java_package = "com.saad.reservation.grpc.stubs";
+
+import "client.proto";   // To reference ClientResponse
+import "chambre.proto";  // To reference ChambreResponse
+import "common.proto";   // Import common.proto for DeleteResponse
+
+service ReservationService {
+  rpc GetReservations (Empty) returns (ReservationListResponse);
+  rpc GetReservationById (ReservationRequest) returns (ReservationResponse);
+  rpc CreateReservation (CreateReservationRequest) returns (ReservationResponse);
+  rpc DeleteReservation (ReservationRequest) returns (DeleteResponse); // Reference DeleteResponse
+}
+
+message ReservationRequest {
+  int64 id = 1;
+}
+
+message ReservationListResponse {
+  repeated ReservationResponse reservations = 1;
+}
+
+message ReservationResponse {
+  int64 id = 1;
+  ClientResponse client = 2;  // Reference ClientResponse
+  ChambreResponse chambre = 3;  // Reference ChambreResponse
+  string dateDebut = 4;
+  string dateFin = 5;
+  string status = 6;
+  int32 nombrePersonnes = 7;
+}
+
+message CreateReservationRequest {
+  int64 clientId = 1;
+  int64 chambreId = 2;
+  string dateDebut = 3;
+  string dateFin = 4;
+  string status = 5;
+  int32 nombrePersonnes = 6;
+}

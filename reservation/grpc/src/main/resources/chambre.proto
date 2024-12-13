@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option java_package = "com.saad.reservation.grpc.stubs";
+
+import "common.proto"; // Import common.proto for DeleteResponse
+
+message ChambreRequest {
+  int64 id = 1;
+}
+
+message CreateChambreRequest {
+  string typeChambre = 1;
+  double prix = 2;
+  bool disponible = 3;
+  string numeroChambre = 4;
+  string description = 5;
+}
+
+message ChambreResponse {
+  int64 id = 1;
+  string typeChambre = 2;
+  double prix = 3;
+  bool disponible = 4;
+  string numeroChambre = 5;
+  string description = 6;
+}
+
+message ChambreListResponse {
+  repeated ChambreResponse chambres = 1;
+}
+
+service ChambreService {
+  rpc GetChambres (Empty) returns (ChambreListResponse);
+  rpc CreateChambre (CreateChambreRequest) returns (ChambreResponse);
+  rpc DeleteChambre (ChambreRequest) returns (DeleteResponse);
+}
+

@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_package = "com.saad.reservation.grpc.stubs";
+
+// Custom Empty message
+message Empty {}
+
+// Custom DeleteResponse message
+message DeleteResponse {
+  bool success = 1;
+}

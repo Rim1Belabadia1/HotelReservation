@@ -1,0 +1,92 @@
+type Query {
+    allClients: [Client]!
+    clientById(id: ID!): Client
+    allChambres: [Chambre]!
+    chambreById(id: ID!): Chambre
+    allReservations: [Reservation]!
+    reservationById(id: ID!): Reservation
+    reservationsByStatus(status: String!): [Reservation]!
+    reservationsForClient(clientId: ID!): [Reservation]!
+    reservationsForChambre(chambreId: ID!): [Reservation]!
+}
+
+type Mutation {
+    saveClient(clientDTO: ClientInput!): Client!
+    updateClient(id: ID!, clientDTO: ClientInput!): Client!
+    deleteClient(id: ID!): String!
+    saveChambre(chambreDTO: ChambreInput!): Chambre!
+    updateChambre(id: ID!, chambreDTO: ChambreInput!): Chambre!
+    deleteChambre(id: ID!): String!
+    saveReservation(reservationDTO: ReservationInput!): Reservation!
+    updateReservation(id: ID!, reservationDTO: ReservationInput!): Reservation!
+    deleteReservation(id: ID!): String!
+}
+
+type Client {
+    id: ID!
+    nom: String!
+    prenom: String!
+    email: String!
+    numTelephone: String!
+    reservationIds: [ID!]
+}
+
+type Chambre {
+    id: ID!
+    typeChambre: TypeChambre!
+    prix: Float!
+    disponible: Boolean!
+    numeroChambre: String!
+    description: String!
+    reservationIds: [ID]
+}
+
+type Reservation {
+    id: ID!
+#    clientId: ID!
+    client: Client!
+#    chambreId: ID!
+    chambre: Chambre!
+    dateDebut: String!
+    dateFin: String!
+    status: StatusReservation!
+    nombrePersonnes: Int!
+}
+
+input ClientInput {
+    nom: String!
+    prenom: String!
+    email: String!
+    numTelephone: String!
+}
+
+input ChambreInput {
+    typeChambre: TypeChambre!
+    prix: Float!
+    disponible: Boolean!
+    numeroChambre: String!
+    description: String!
+    reservationIds: [ID]
+}
+
+input ReservationInput {
+    clientId: ID!
+    chambreId: ID!
+    dateDebut: String!
+    dateFin: String!
+    status: StatusReservation!
+    nombrePersonnes: Int!
+}
+
+enum StatusReservation {
+    CONFIRMED
+    CANCELLED
+    CHECKED_IN
+    CHECKED_OUT
+}
+
+enum TypeChambre {
+    SINGLE
+    DOUBLE
+    SUITE
+}

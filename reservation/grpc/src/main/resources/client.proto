@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_package = "com.saad.reservation.grpc.stubs";
+
+import "common.proto"; // Import common.proto for Empty and DeleteResponse
+
+message ClientRequest {
+  int64 id = 1;
+}
+
+message CreateClientRequest {
+  string nom = 1;
+  string email = 2;
+}
+
+message ClientResponse {
+  int64 id = 1;
+  string nom = 2;
+  string prenom = 3;
+  string email = 4;
+  string numTelephone = 5;
+}
+
+message ClientListResponse {
+  repeated ClientResponse chambres = 1;
+}
+
+
+service ClientService {
+  rpc GetClients (Empty) returns (ClientListResponse);
+  rpc GetClientById (ClientRequest) returns (ClientResponse);
+  rpc CreateClient (CreateClientRequest) returns (ClientResponse);
+  rpc DeleteClient (ClientRequest) returns (DeleteResponse);
+}
+
